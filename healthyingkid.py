@@ -320,10 +320,10 @@ elif selection == "menu3":
     with st.form("chat_form", clear_on_submit=True):
         symptom = st.text_input("상담 내용을 입력하세요:", key="user_input")
         submitted = st.form_submit_button("입력")
-    st.write("🙋‍♂나:")
-    st.write("symptom")
     
     if submitted and symptom:
+        st.write("🙋‍♂나:")
+        st.write("symptom")
         prompt= """
                 의료와 관련된 질문을 할 거야. 성인이 아닌 소아나 청소년이라는 점을 고려해서 답변해줘!
                 아이의 성별은 %s, 키는 %fcm, 몸무게가 %fkg, 나이는 %d살이야.
