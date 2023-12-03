@@ -241,10 +241,10 @@ elif selection == "menu2":
         submit_button = st.button("저장하기", key='submit1')
 
         if "messages" not in st.session_state:
-        st.session_state.messages = [
-            {"role": "system", 
-             "content": "You are a pediatrician. Speak like you are a medical specialist"}
-        ]
+            st.session_state.messages = [
+                {"role": "system", 
+                 "content": "You are a pediatrician. Speak like you are a medical specialist"}
+            ]
 
         if submit_button and diary_text:  # 일기 텍스트가 있을 때만 처리
             diary_prompt= """
