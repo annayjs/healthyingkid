@@ -2,7 +2,8 @@ streamlit
 streamlit-option-menu 
 streamlit-chat
 folium
-streamlit_folium
+streamlit-folium
+streamlit-vis-timeline>0.2.0
 openai
 deepl
 xmltodict
