@@ -262,7 +262,7 @@ elif selection == "menu2":
             import requests
             import pandas as pd
             
-            url = 'https://github.com/annayjs/healthyingkid/blob/main/child_info.csv'  # GitHub에 있는 CSV 파일의 URL
+            url = 'https://raw.githubusercontent.com/annayjs/healthyingkid/main/child_info.csv'  # GitHub에 있는 CSV 파일의 URL
             response = requests.get(url)
             open('child_info.csv', 'wb').write(response.content)
 
