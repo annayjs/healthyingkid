@@ -251,7 +251,7 @@ elif selection == "menu2":
                 %s \n
                 위의 글은 부모님이 아이의 건강에 대한 육아일기를 적은 내용이야. 
                 아이의 성별은 %s, 키는 %fcm, 몸무게가 %fkg, 나이는 %d살이야.
-                육아일기의 내용과, 아이의 정보를 고려해서 이 육아일기에 대한 감정적, 의료적 피드백을 3줄로 해줘."""%(diary_text, gender, height, weight, age)
+                육아일기의 내용과, 아이의 정보를 고려해서 이 육아일기에 대한 감정적, 의료적 피드백을 세 항목으로 해줘."""%(diary_text, gender, height, weight, age)
             diary_prompt_eng=translator.translate_text(diary_prompt, target_lang="EN-US").text
             st.session_state.messages.append({"role": "user", 
                                           "content": diary_prompt_eng})
