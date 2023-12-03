@@ -270,9 +270,9 @@ elif selection == "menu2":
         child_idx=child_name_list.index(child_choice)
         
         st.write(f"Day 1✏️: \n {child_data[child_data['name']==child_choice].loc[:, 'Day 1'][child_idx]}")
-        st.write("")
+        st.write("_________________________________________________________________________________________________________")
         st.write(f"Day 2✏️: \n{child_data[child_data['name']==child_choice].loc[:, 'Day 2'][child_idx]}")
-        st.write("")
+        st.write("_________________________________________________________________________________________________________")
         st.write(f"Day 3✏️: \n{child_data[child_data['name']==child_choice].loc[:, 'Day 3'][child_idx]}")
             
 
