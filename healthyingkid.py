@@ -211,33 +211,68 @@ elif selection == "menu2":
 
     # 육아일기 쓰기 탭
     with tab1:
+        
         api_key_1=st.text_input("api key를 입력하세요:", key="api_key_1")
         openai.api_key=api_key_1
         st.subheader("✍🏻육아일기 쓰기")
+        
+        #아이정보 csv 가져오기
+        import requests
+        import pandas as pd
+        
+        url = 'https://raw.githubusercontent.com/annayjs/healthyingkid/main/child_info.csv'  # GitHub에 있는 CSV 파일의 URL
+        response = requests.get(url)
+        open('child_info.csv', 'wb').write(response.content)
+
+        child_data = pd.read_csv('child_info.csv')
+        child_name_list=child_data['name'].to_list()
+
+        child_choice = st.radio("아이를 선택하세요:", (child_name_list))
+        child_idx=child_name_list.index(child_choice)
+
+        if child_choice is not None:
+        gender=child_data[child_data['name']==child_choice]['gender'][child_idx]
+        age=child_data[child_data['name']==child_choice]['age'][child_idx]
+        height=child_data[child_data['name']==child_choice]['height'][child_idx]
+        weight=child_data[child_data['name']==child_choice]['weight'][child_idx]
+        
         date = st.date_input("날짜를 선택하세요")
         diary_text = st.text_area("오늘 우리 아이는 어땠나요?")
         submit_button = st.button("저장하기", key='submit1')
 
-        if submit_button and diary_text:  # 일기 텍스트가 있을 때만 처리
-            # chat_with_gpt 함수를 사용하여 GPT-3로부터 코멘트를 받아옵니다.
-            st.session_state['openai_model'] = 'gpt-3.5-turbo'  # 사용할 모델을 지정합니다.
-            st.session_state.messages = [
-                {"role": "system", "content": "AI봇(아이봇)의 답변이에요"},
-                {"role": "user", "content": diary_text}
-            ]
-            
-            chat_with_gpt()  # 코멘트 생성 함수 호출
-            
-            # 마지막으로 추가된 assistant 메시지(코멘트)를 가져와 데이터베이스에 저장합니다.
-            if st.session_state.messages:
-                last_message = st.session_state.messages[-1]
-                if last_message['role'] == 'assistant':
-                    comment = last_message['content']
-                    c.execute('UPDATE diary SET comment = ? WHERE date = ?', (comment, date.strftime("%Y-%m-%d")))
-                    conn.commit()
+        if "messages" not in st.session_state:
+        st.session_state.messages = [
+            {"role": "system", 
+             "content": "You are a pediatrician. Speak like you are a medical specialist"}
+        ]
 
-            conn.close()
-            st.success("저장되었습니다!")
+        if submit_button and diary_text:  # 일기 텍스트가 있을 때만 처리
+            diary_prompt= """
+                %s \n
+                위의 글은 부모님이 아이의 건강에 대한 육아일기를 적은 내용이야. 
+                아이의 성별은 %s, 키는 %fcm, 몸무게가 %fkg, 나이는 %d살이야.
+                육아일기의 내용과, 아이의 정보를 고려해서 이 육아일기에 대한 의료적인 피드백을 3줄로 해줘."""%(diary_text, gender, height, weight, age)
+            diary_prompt_eng=translator.translate_text(diary_prompt, target_lang="EN-US").text
+            st.session_state.messages.append({"role": "user", 
+                                          "content": diary_prompt_eng})
+            response = openai.chat.completions.create(
+                model="gpt-4",
+                messages=st.session_state.messages, 
+                max_tokens=500
+            )
+            answer = translator.translate_text(response.choices[0].message.content, target_lang='KO').text
+            st.session_state.messages.append({"role": "assistant", "content": answer})
+            st.write("오늘의 육아일기:")
+            st.write(diary_text)
+        
+        for message in st.session_state.messages:
+            if message["role"] == "assistant":
+                gpt_feedback = message['content']
+                st.write("_________________________________________________________________________________________________________")
+                st.write("👩‍⚕️닥터 아이봇의 육아일기 세 줄 피드백!: ")
+                st.write(f"{gpt_feedback}")
+                st.write("_________________________________________________________________________________________________________")
+                st.success("저장되었습니다!")
     
     # 육아일기 찾기 탭
     with tab2:
@@ -305,14 +340,6 @@ elif selection == "menu3":
         d2=child_data[child_data['name']==child_choice]['Day 2'][child_idx]
         d3=child_data[child_data['name']==child_choice]['Day 3'][child_idx]
         
-
-    
-
-    if "messages" not in st.session_state:
-        st.session_state.messages = [
-            {"role": "system", 
-             "content": "You are a pediatrician. Speak like you are a medical specialist"}
-        ]
     
     with st.form("chat_form", clear_on_submit=True):
         symptom = st.text_input("상담 내용을 입력하세요:", key="user_input")
@@ -320,7 +347,12 @@ elif selection == "menu3":
     
     st.subheader("📝 상담 로그")
     st.write("_________________________________________________________________________________________________________")
-    
+
+    if "messages" not in st.session_state:
+        st.session_state.messages = [
+            {"role": "system", 
+             "content": "You are a pediatrician. Speak like you are a medical specialist"}
+        ]
     
     if submitted and symptom:
         prompt= """
@@ -335,18 +367,16 @@ elif selection == "menu3":
                 현재 상황은 다음과 같아.
                 - %s
                 
-                이를 고려해서 맞춤 치료방법과 복용해야하는 약 등 아이의 건강 상태를 진단해줘."""%(gender, height, weight, age, d1, d2, d3, symptom)
+                위의 모든 정보를 고려해서 맞춤 치료방법과 복용해야하는 약 등 아이의 건강 상태를 진단해줘."""%(gender, height, weight, age, d1, d2, d3, symptom)
         prompt_eng=translator.translate_text(prompt, target_lang="EN-US").text
         st.session_state.messages.append({"role": "user", 
-                                      "content": prompt})
+                                      "content": prompt_eng})
         response = openai.chat.completions.create(
             model="gpt-4",
             messages=st.session_state.messages, 
             max_tokens=1000
         )
         answer = translator.translate_text(response.choices[0].message.content, target_lang='KO').text
-        if 'messages' not in st.session_state:
-            st.session_state.messages = []
         st.session_state.messages.append({"role": "assistant", "content": answer + "@@@" + symptom})
         
     for message in st.session_state.messages:
