@@ -267,9 +267,9 @@ elif selection == "menu2":
 
         child_choice = st.radio("아이를 선택하세요:", (child_data['name'].to_list()))
         
-        st.write(f"Day 1: {child_data[child_data['name']==child_choice].loc[:, 'Day 1']}")
-        st.write(f"Day 2: {child_data[child_data['name']==child_choice].loc[:, 'Day 2']}")
-        st.write(f"Day 3: {child_data[child_data['name']==child_choice].loc[:, 'Day 3']}")
+        st.write(f"Day 1: {child_data[child_data['name']==child_choice].loc[:, 'Day 1'][0]}")
+        st.write(f"Day 2: {child_data[child_data['name']==child_choice].loc[:, 'Day 2'][0]}")
+        st.write(f"Day 3: {child_data[child_data['name']==child_choice].loc[:, 'Day 3'][0]}")
             
 
 ###################################################################################################################
