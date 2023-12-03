@@ -201,8 +201,6 @@ if selection == None or selection == "menu1":
             st.form_submit_button("👩🏻‍⚕️병원 예약하러 가기", use_container_width=True)
 
 elif selection == "menu2":
-    #초기화
-    st.session_state.messages = []
     import openai
     import deepl
     #번역기 생성
