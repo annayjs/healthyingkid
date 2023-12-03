@@ -282,7 +282,7 @@ elif selection == "menu3":
     import openai
     import deepl
     import csv
-    st.title("아이봇 상담👩‍⚕️")
+    st.title("닥터 아이봇 상담👩‍⚕️")
     api_key=st.text_input("api key를 입력하세요:", key="api_key")
     openai.api_key=api_key
     translator = deepl.Translator(os.getenv("DeepL_API_KEY"))
