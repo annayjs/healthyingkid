@@ -201,6 +201,8 @@ if selection == None or selection == "menu1":
             st.form_submit_button("👩🏻‍⚕️병원 예약하러 가기", use_container_width=True)
 
 elif selection == "menu2":
+    #초기화
+    st.session_state.messages = []
     import openai
     import deepl
     #번역기 생성
@@ -306,6 +308,9 @@ elif selection == "menu3":
     import openai
     import deepl
     import csv
+    #초기화
+    st.session_state.messages = []
+
     st.title("닥터 아이봇 상담👩‍⚕️")
     api_key=st.text_input("api key를 입력하세요:", key="api_key")
     openai.api_key=api_key
@@ -333,7 +338,7 @@ elif selection == "menu3":
         age=child_data[child_data['name']==child_choice]['age'][child_idx]
         height=child_data[child_data['name']==child_choice]['height'][child_idx]
         weight=child_data[child_data['name']==child_choice]['weight'][child_idx]
-        st.caption("우리 아이 정보🧒ℹ️")
+        st.subheader("우리 아이 정보🧒ℹ️")
         st.write(f"성별: {gender} 아이 | 나이: {age} 세")
         st.write(f"키: {height} cm | 몸무게: {weight} kg")
         d1=child_data[child_data['name']==child_choice]['Day 1'][child_idx]
