@@ -341,7 +341,8 @@ elif selection == "menu3":
                                       "content": prompt})
         response = openai.chat.completions.create(
             model="gpt-4",
-            messages=st.session_state.messages
+            messages=st.session_state.messages, 
+            max_tokens=1000
         )
         answer = translator.translate_text(response.choices[0].message.content, target_lang='KO').text
         st.session_state.messages.append({"role": "assistant", "content": answer + "@@@" + symptom})
