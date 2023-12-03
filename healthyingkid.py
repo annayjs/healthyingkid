@@ -301,11 +301,10 @@ elif selection == "menu2":
             st.write("_________________________________________________________________________________________________________")
             st.write(f"Day 3✏️: \n{child_data[child_data['name']==child_choice_2].loc[:, 'Day 3'][child_idx]}")
             
-
-###################################################################################################################
-elif selection == "menu3":
     #초기화
     st.session_state.messages = []
+###################################################################################################################
+elif selection == "menu3":
     import streamlit
     import openai
     import deepl
@@ -358,7 +357,7 @@ elif selection == "menu3":
             {"role": "system", 
              "content": "You are a pediatrician. Speak like you are a medical specialist"}
         ]
-    
+
     if submitted and symptom:
         prompt= """
                 의료와 관련된 질문을 할 거야. 성인이 아닌 소아나 청소년이라는 점을 고려해서 답변해줘!
