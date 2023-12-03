@@ -200,6 +200,9 @@ if selection == None or selection == "menu1":
                 st.write(parking_info[2])
             st.form_submit_button("👩🏻‍⚕️병원 예약하러 가기", use_container_width=True)
 ###################################################################################################################
+#번역기 생성
+DeepL_API_KEY = 'c24af978-e422-0d8b-4420-4c2daa1a067e:fx'
+translator = deepl.Translator(DeepL_API_KEY)
 elif selection == "menu2":
     import openai    
     st.title("우리아이 육아일기 🧒📔")
@@ -208,7 +211,6 @@ elif selection == "menu2":
     with tab1:
         api_key_1=st.text_input("api key를 입력하세요:", key="api_key")
         openai.api_key=api_key
-        translator = deepl.Translator(os.getenv("DeepL_API_KEY"))
         st.subheader("✍🏻육아일기 쓰기")
         date = st.date_input("날짜를 선택하세요")
         diary_text = st.text_area("오늘 우리 아이는 어땠나요?")
