@@ -335,7 +335,7 @@ elif selection == "menu3":
                 현재 상황은 다음과 같아.
                 - %s
                 
-                이를 고려해서 맞춤 치료방법과 복용해야하는 약 등 아이의 건강 상태를 진단해줘."""%(gender, height, weight, age, symptom)}
+                이를 고려해서 맞춤 치료방법과 복용해야하는 약 등 아이의 건강 상태를 진단해줘."""%(gender, height, weight, age, symptom)
         response = openai.chat.completions.create(
             model="gpt-4",
             messages=[{
