@@ -150,7 +150,7 @@ def find_parking_info(medi_info):
 selection = st.session_state["test_key"]
 
 if selection == None or selection == "menu1":
-    # [기능1-가까운 소아병원 찾기] 
+    # [기능1-가까운 소아병원 찾기]
     st.subheader("🏥 가까운 소아병원 찾기")
     distance = st.select_slider("Set distance",["🏃🏻‍♀️도보이동", "🚘대중교통 이용", "🚗자가용 이용"],label_visibility="collapsed")
     if distance == "🏃🏻‍♀️도보이동":
@@ -199,12 +199,12 @@ if selection == None or selection == "menu1":
                 st.write("3️⃣ **주차관련안내:**")
                 st.write(parking_info[2])
             st.form_submit_button("👩🏻‍⚕️병원 예약하러 가기", use_container_width=True)
-###################################################################################################################
-#번역기 생성
-DeepL_API_KEY = 'c24af978-e422-0d8b-4420-4c2daa1a067e:fx'
-translator = deepl.Translator(DeepL_API_KEY)
+
 elif selection == "menu2":
-    import openai    
+    import openai
+    #번역기 생성
+    DeepL_API_KEY = 'c24af978-e422-0d8b-4420-4c2daa1a067e:fx'
+    translator = deepl.Translator(DeepL_API_KEY)
     st.title("우리아이 육아일기 🧒📔")
     tab1, tab2 = st.tabs(["육아일기 쓰기", "육아일기 찾기"])
     # 육아일기 쓰기 탭
