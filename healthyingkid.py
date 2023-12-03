@@ -288,7 +288,7 @@ elif selection == "menu3":
     child_name_list=child_data['name'].to_list()
 
     #아이 선택하기
-    child_choice = st.radio("아이를 선택하세요:", (child_name_list))
+    child_choice = st.radio("상담할 아이를 선택하세요:", (child_name_list))
     child_idx=child_name_list.index(child_choice)
     
 
@@ -308,6 +308,13 @@ elif selection == "menu3":
     conversation = [
         {"role": "assistant", "content": f"아이의 증상을 알려주세요"},
     ]
+
+    if "messages" not in st.session_state:
+        st.session_state.messages = [
+            {"role": "system", 
+             "content": "You are a pediatrician. Speak like you are a medical specialist"}
+        ]
+    
     with st.form("chat_form", clear_on_submit=True):
         symptom = st.text_input("상담 내용을 입력하세요:", key="user_input")
         submitted = st.form_submit_button("입력")
@@ -327,16 +334,12 @@ elif selection == "menu3":
                 
                 이를 고려해서 맞춤 치료방법과 복용해야하는 약 등 아이의 건강 상태를 진단해줘."""%(gender, height, weight, age, d1, d2, d3, symptom)
         prompt_eng=translator.translate_text(prompt, target_lang="EN-US").text
+        st.session_state.messages.append({"role": "user", 
+                                      "content": prompt})
         response = openai.chat.completions.create(
             model="gpt-4",
-            messages=[{
-                "role": "user",
-                "content": prompt_eng},
-                      {
-                          "role": "system",
-                          "content": "You are a pediatrician. Speak like you are a medical specialist"
-                      }
-                     ]
+            messages=st.session_state.messages
         )
+        st.subheader("📝 상담 로그")
         answer=translator.translate_text(response.choices[0].message.content, target_lang="KO").text
 
