@@ -219,18 +219,6 @@ elif selection == "menu2":
         submit_button = st.button("저장하기", key='submit1')
 
         if submit_button and diary_text:  # 일기 텍스트가 있을 때만 처리
-            conn = sqlite3.connect('parenting_diary.db')
-            c = conn.cursor()
-            c.execute('''
-                CREATE TABLE IF NOT EXISTS diary (
-                    date TEXT PRIMARY KEY,
-                    entry TEXT,
-                    comment TEXT
-                )
-            ''')
-            c.execute('REPLACE INTO diary (date, entry) VALUES (?, ?)', (date.strftime("%Y-%m-%d"), diary_text))
-            conn.commit()
-
             # chat_with_gpt 함수를 사용하여 GPT-3로부터 코멘트를 받아옵니다.
             st.session_state['openai_model'] = 'gpt-3.5-turbo'  # 사용할 모델을 지정합니다.
             st.session_state.messages = [
@@ -288,9 +276,6 @@ elif selection == "menu3":
     #번역기 생성
     DeepL_API_KEY = 'c24af978-e422-0d8b-4420-4c2daa1a067e:fx'
     translator = deepl.Translator(DeepL_API_KEY)
-
-    date = st.date_input("날짜를 선택하세요")
-    st.divider()
 
     import requests
     import pandas as pd
@@ -354,23 +339,4 @@ elif selection == "menu3":
                      ]
         )
         answer=translator.translate_text(response.choices[0].message.content, target_lang="KO").text
-        conversation.append({"role": "assistant", "content": answer})
 
-    # 대화 표시
-    for i, message_obj in enumerate(conversation):
-        if message_obj["role"] == "user":
-            message(symptom, is_user=True, key=f"user_message_{i}")
-        else:
-            message(message_obj["content"], key=f"assistant_message_{i}")
-        
-    # Save conversation in session state
-    st.session_state.conversation = conversation
-
-     # Accessing the chatbot's responses
-    assistant_responses = [message_obj["content"] for message_obj in conversation if message_obj["role"] == "assistant"]
-
-    # Storing the responses in a separate list (you can do this outside of the main code block)
-    # Example: storing in a list named assistant_responses_list
-    assistant_responses_list = st.session_state.get("assistant_responses_list", [])
-    assistant_responses_list.extend(assistant_responses)
-    st.session_state.assistant_responses_list = assistant_responses_list
