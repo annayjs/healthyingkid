@@ -285,30 +285,36 @@ elif selection == "menu3":
     st.title("닥터 아이봇 상담👩‍⚕️")
     api_key=st.text_input("api key를 입력하세요:", key="api_key")
     openai.api_key=api_key
-    translator = deepl.Translator(os.getenv("DeepL_API_KEY"))
+    #번역기 생성
+    DeepL_API_KEY = 'c24af978-e422-0d8b-4420-4c2daa1a067e:fx'
+    translator = deepl.Translator(DeepL_API_KEY)
 
     date = st.date_input("날짜를 선택하세요")
     st.divider()
 
-    child_list=[{'name': '신유정', 'gender':'여자', 'age': 5, 'height': 110.5, 'weight': 19.8},
-    {'name': '김민서', 'gender':'남자', 'age': 11, 'height': 145, 'weight': 40.5}]
-
-    child_name_list=[child['name'] for child in child_list]
+    import requests
+    import pandas as pd
     
-    #아이 선택하기 
+    url = 'https://raw.githubusercontent.com/annayjs/healthyingkid/main/child_info.csv'  # GitHub에 있는 CSV 파일의 URL
+    response = requests.get(url)
+    open('child_info.csv', 'wb').write(response.content)
+
+    child_data = pd.read_csv('child_info.csv')
+    child_name_list=child_data['name'].to_list()
+
+    #아이 선택하기
     child_choice = st.radio("아이를 선택하세요:", (child_name_list))
+    child_idx=child_name_list.index(child_choice)
+    
 
-    selected_child = next((child for child in child_list if child['name'] == child_choice), None)
-
-    if selected_child is not None:
-        st.write(f"성별: {selected_child['gender']} 아이")
-        st.write(f"나이: {selected_child['age']} 세")
-        st.write(f"키: {selected_child['height']} cm")
-        st.write(f"몸무게: {selected_child['weight']} kg")
-        gender=selected_child['gender']
-        age=selected_child['age']
-        height=selected_child['height']
-        weight=selected_child['weight']
+    if child_choice is not None:
+        gender=child_data[child_data['name'==child_choice]['gender'][child_idx]
+        age=child_data[child_data['name'==child_choice]['age'][child_idx]
+        height=child_data[child_data['name'==child_choice]['height'][child_idx]
+        weight=child_data[child_data['name'==child_choice]['weight'][child_idx]
+        st.write(f"성별: {gender} 아이 | 나이: {age} 세")
+        st.write(f"키: {height} cm | 몸무게: {weight} kg")
+        
 
     
     conversation = [
@@ -317,7 +323,19 @@ elif selection == "menu3":
     with st.form("chat_form", clear_on_submit=True):
         symptom = st.text_input("상담 내용을 입력하세요:", key="user_input")
         submitted = st.form_submit_button("입력")
+    
     if submitted and symptom:
+        prompt="role": "user",
+                "content": """
+                의료와 관련된 질문을 할 거야. 성인이 아닌 소아나 청소년이라는 점을 고려해서 답변해줘!
+                아이의 성별은 %s, 키는 %fcm, 몸무게가 %fkg, 나이는 %d살이야.
+                
+                최근 3일 간 아이가 보인 특징은 다음과 같아.
+    
+                현재 상황은 다음과 같아.
+                - %s
+                
+                이를 고려해서 맞춤 치료방법과 복용해야하는 약 등 아이의 건강 상태를 진단해줘."""%(gender, height, weight, age, symptom)}
         response = openai.chat.completions.create(
             model="gpt-4",
             messages=[{
