@@ -278,7 +278,7 @@ elif selection == "menu2":
 
 ###################################################################################################################
 elif selection == "menu3":
-    from streamlit_chat import message
+    import streamlit
     import openai
     import deepl
     import csv
