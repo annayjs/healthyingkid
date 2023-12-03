@@ -344,10 +344,9 @@ elif selection == "menu3":
             messages=st.session_state.messages, 
             max_tokens=1000
         )
-        
+        answer = translator.translate_text(response.choices[0].message.content, target_lang='KO').text
         if 'messages' not in st.session_state:
             st.session_state.messages = []
-        answer = translator.translate_text(response.choices[0].message.content, target_lang='KO').text
         st.session_state.messages.append({"role": "assistant", "content": answer + "@@@" + symptom})
         
     for message in st.session_state.messages:
