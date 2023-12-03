@@ -340,6 +340,6 @@ elif selection == "menu3":
             model="gpt-4",
             messages=st.session_state.messages
         )
-        st.subheader("📝 상담 로그")
-        answer=translator.translate_text(response.choices[0].message.content, target_lang="KO").text
+    st.subheader("📝 상담 로그")
+    answer=translator.translate_text(response.choices[0].message.content, target_lang="KO").text
 
