@@ -321,8 +321,6 @@ elif selection == "menu3":
     st.subheader("📝 상담 로그")
     
     if submitted and symptom:
-        st.write("🙋‍♂나:")
-        st.write(symptom)
         prompt= """
                 의료와 관련된 질문을 할 거야. 성인이 아닌 소아나 청소년이라는 점을 고려해서 답변해줘!
                 아이의 성별은 %s, 키는 %fcm, 몸무게가 %fkg, 나이는 %d살이야.
@@ -343,11 +341,16 @@ elif selection == "menu3":
             model="gpt-4",
             messages=st.session_state.messages
         )
-    #answer=translator.translate_text(response.choices[0].message.content, target_lang="KO").text
+        answer = translator.translate_text(response.choices[0].message.content, target_lang='KO').text
+        st.session_state.messages.append({"role": "assistant", "content": answer + "@@@" + symptom})
+        
     for message in st.session_state.messages:
         if message["role"] == "assistant":
-            answer= message['content']
-            answer = translator.translate_text(answer, target_lang="KO").text
+            gpt_answer = message['content'].split('@@@')[0]
+            input_symptom = message['content'].split('@@@')[1]
+            st.write("🙋‍♂나:")
+            st.write(symptom)
             st.write("닥터 아이봇👩‍⚕️")
-            st.write(f"{answer}")
+            st.write(f"{gpt_answer}")
+            
 
