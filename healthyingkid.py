@@ -210,8 +210,8 @@ elif selection == "menu2":
     tab1, tab2 = st.tabs(["육아일기 쓰기", "육아일기 찾기"])
     # 육아일기 쓰기 탭
     with tab1:
-        api_key_1=st.text_input("api key를 입력하세요:", key="api_key")
-        openai.api_key=api_key
+        api_key_1=st.text_input("api key를 입력하세요:", key="api_key_1")
+        openai.api_key=api_key_1
         st.subheader("✍🏻육아일기 쓰기")
         date = st.date_input("날짜를 선택하세요")
         diary_text = st.text_area("오늘 우리 아이는 어땠나요?")
