@@ -312,8 +312,11 @@ elif selection == "menu3":
         age=child_data[child_data['name']==child_choice]['age'][child_idx]
         height=child_data[child_data['name']==child_choice]['height'][child_idx]
         weight=child_data[child_data['name']==child_choice]['weight'][child_idx]
-        st.write(f"성별: {gender} 아이 | 나이: {age} 세")
-        st.write(f"키: {height} cm | 몸무게: {weight} kg")
+        st.write(f"성별: {gender} 아이      |      나이: {age} 세")
+        st.write(f"키: {height} cm      |      몸무게: {weight} kg")
+        d1=child_data[child_data['name']==child_choice]['Day 1'][child_idx]
+        d2=child_data[child_data['name']==child_choice]['Day 2'][child_idx]
+        d3=child_data[child_data['name']==child_choice]['Day 3'][child_idx]
         
 
     
@@ -330,25 +333,20 @@ elif selection == "menu3":
                 아이의 성별은 %s, 키는 %fcm, 몸무게가 %fkg, 나이는 %d살이야.
                 
                 최근 3일 간 아이가 보인 특징은 다음과 같아.
+                - 3일전: %s
+                - 2일전: %s
+                - 1일전: %s
     
                 현재 상황은 다음과 같아.
                 - %s
                 
-                이를 고려해서 맞춤 치료방법과 복용해야하는 약 등 아이의 건강 상태를 진단해줘."""%(gender, height, weight, age, symptom)
+                이를 고려해서 맞춤 치료방법과 복용해야하는 약 등 아이의 건강 상태를 진단해줘."""%(gender, height, weight, age, d1, d2, d3, symptom)
+        prompt_eng=translator.translate_text(prompt, target_lang="EN-US").text
         response = openai.chat.completions.create(
             model="gpt-4",
             messages=[{
                 "role": "user",
-                "content": """
-                의료와 관련된 질문을 할 거야. 성인이 아닌 소아나 청소년이라는 점을 고려해서 답변해줘!
-                아이의 성별은 %s, 키는 %fcm, 몸무게가 %fkg, 나이는 %d살이야.
-                
-                최근 3일 간 아이가 보인 특징은 다음과 같아.
-    
-                현재 상황은 다음과 같아.
-                - %s
-                
-                이를 고려해서 맞춤 치료방법과 복용해야하는 약 등 아이의 건강 상태를 진단해줘."""%(gender, height, weight, age, symptom)},
+                "content": prompt_eng},
                       {
                           "role": "system",
                           "content": "You are a pediatrician. Speak like you are a medical specialist"
