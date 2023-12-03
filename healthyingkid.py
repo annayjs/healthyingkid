@@ -312,7 +312,7 @@ elif selection == "menu3":
         age=child_data[child_data['name']==child_choice]['age'][child_idx]
         height=child_data[child_data['name']==child_choice]['height'][child_idx]
         weight=child_data[child_data['name']==child_choice]['weight'][child_idx]
-        st.write(f"성별: {gender} 아이      |      나이: {age} 세")
+        st.write(f"성별: {gender} 아이      |                              나이: {age} 세")
         st.write(f"키: {height} cm      |      몸무게: {weight} kg")
         d1=child_data[child_data['name']==child_choice]['Day 1'][child_idx]
         d2=child_data[child_data['name']==child_choice]['Day 2'][child_idx]
