@@ -231,10 +231,10 @@ elif selection == "menu2":
         child_idx=child_name_list.index(child_choice)
 
         if child_choice is not None:
-        gender=child_data[child_data['name']==child_choice]['gender'][child_idx]
-        age=child_data[child_data['name']==child_choice]['age'][child_idx]
-        height=child_data[child_data['name']==child_choice]['height'][child_idx]
-        weight=child_data[child_data['name']==child_choice]['weight'][child_idx]
+            gender=child_data[child_data['name']==child_choice]['gender'][child_idx]
+            age=child_data[child_data['name']==child_choice]['age'][child_idx]
+            height=child_data[child_data['name']==child_choice]['height'][child_idx]
+            weight=child_data[child_data['name']==child_choice]['weight'][child_idx]
         
         date = st.date_input("날짜를 선택하세요")
         diary_text = st.text_area("오늘 우리 아이는 어땠나요?")
