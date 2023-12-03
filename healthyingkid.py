@@ -227,7 +227,7 @@ elif selection == "menu2":
         child_data = pd.read_csv('child_info.csv')
         child_name_list=child_data['name'].to_list()
 
-        child_choice = st.radio("아이를 선택하세요:", (child_name_list))
+        child_choice = st.radio("아이를 선택하세요:", (child_name_list), key='choice1')
         child_idx=child_name_list.index(child_choice)
 
         if child_choice is not None:
@@ -289,7 +289,7 @@ elif selection == "menu2":
         child_data = pd.read_csv('child_info.csv')
         child_name_list=child_data['name'].to_list()
 
-        child_choice_2 = st.radio("아이를 선택하세요:", (child_name_list))
+        child_choice_2 = st.radio("아이를 선택하세요:", (child_name_list), key='choice2')
         child_idx=child_name_list.index(child_choice_2)
 
         if child_choice_2 is not None:
