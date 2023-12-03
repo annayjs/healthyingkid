@@ -257,7 +257,7 @@ elif selection == "menu2":
         child_choice = st.radio("아이를 선택하세요:", (child_name_list))
         child_idx=child_name_list.index(child_choice)
 
-        if child_choice:
+        if child_choice is not None:
             st.write(f"Day 1✏️: \n {child_data[child_data['name']==child_choice].loc[:, 'Day 1'][child_idx]}")
             st.write("_________________________________________________________________________________________________________")
             st.write(f"Day 2✏️: \n{child_data[child_data['name']==child_choice].loc[:, 'Day 2'][child_idx]}")
