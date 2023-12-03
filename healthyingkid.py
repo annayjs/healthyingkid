@@ -208,6 +208,7 @@ elif selection == "menu2":
     translator = deepl.Translator(DeepL_API_KEY)
     st.title("우리아이 육아일기 🧒📔")
     tab1, tab2 = st.tabs(["육아일기 쓰기", "육아일기 찾기"])
+
     # 육아일기 쓰기 탭
     with tab1:
         api_key_1=st.text_input("api key를 입력하세요:", key="api_key_1")
@@ -257,15 +258,22 @@ elif selection == "menu2":
         search_button = st.button("찾기", key='submit2')
 
         if search_button:
-            conn = sqlite3.connect('parenting_diary.db')
-            c = conn.cursor()
-            c.execute('SELECT entry FROM diary WHERE date = ?', (view_date.strftime("%Y-%m-%d"),))
-            entry = c.fetchone()
-            conn.close()
-            if entry:
-                st.text_area("저장된 일기", entry[0], height=200)
-            else:
-                st.info("선택하신 날짜에는 저장된 일기가 없습니다.")
+            #아이정보 csv 가져오기
+            import requests
+            import pandas as pd
+            
+            url = 'https://github.com/annayjs/healthyingkid/blob/main/자녀정보.csv'  # GitHub에 있는 CSV 파일의 URL
+            response = requests.get(url)
+            open('자녀정보.csv', 'wb').write(response.content)
+
+            child_data = pd.read_csv('자녀정보.csv')
+
+            child_choice = st.radio("아이를 선택하세요:", (child_data['name'].to_list()))
+            
+            st.write(f"Day 1: {child_data[child_data['name']==child_choice].loc[:, 'Day 1']}")
+            st.write(f"Day 2: {child_data[child_data['name']==child_choice].loc[:, 'Day 2']}")
+            st.write(f"Day 3: {child_data[child_data['name']==child_choice].loc[:, 'Day 3']}")
+            
 
 ###################################################################################################################
 elif selection == "menu3":
