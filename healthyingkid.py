@@ -7,13 +7,13 @@ import datetime
 st.set_page_config(layout="centered", page_title="AI융합캡스톤디자인과창업-프로토타입", page_icon="🚀")
 
 from streamlit_option_menu import option_menu
-selected3 = option_menu(None, ["소아병원 찾기", "AI챗봇 상담",  "우리아이 육아일기"], 
+selected3 = option_menu(None, ["menu1", "menu2",  "menu3"], 
     icons=['house', 'cloud-upload', "list-task"], 
     menu_icon="cast", default_index=0, orientation="horizontal",key="test_key",
     styles={
         "container": {"padding": "0!important", "background-color": "#fafafa"},
-        "icon": {"color": "white", "font-size": "15px"}, 
-        "nav-link": {"font-size": "15px", "text-align": "center", "margin":"1px", "--hover-color": "#eee"},
+        "icon": {"color": "white", "font-size": "13px"}, 
+        "nav-link": {"font-size": "13px", "text-align": "center", "margin":"1px", "--hover-color": "#eee"},
         "nav-link-selected": {"background-color": "red"},
     }
 )
