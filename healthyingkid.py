@@ -262,11 +262,11 @@ elif selection == "menu2":
             import requests
             import pandas as pd
             
-            url = 'https://github.com/annayjs/healthyingkid/blob/main/자녀정보.csv'  # GitHub에 있는 CSV 파일의 URL
+            url = 'https://github.com/annayjs/healthyingkid/blob/main/child_info.csv'  # GitHub에 있는 CSV 파일의 URL
             response = requests.get(url)
-            open('자녀정보.csv', 'wb').write(response.content)
+            open('child_info.csv', 'wb').write(response.content)
 
-            child_data = pd.read_csv('자녀정보.csv')
+            child_data = pd.read_csv('child_info.csv')
 
             child_choice = st.radio("아이를 선택하세요:", (child_data['name'].to_list()))
             
