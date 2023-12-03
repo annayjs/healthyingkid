@@ -308,10 +308,10 @@ elif selection == "menu3":
     
 
     if child_choice is not None:
-        gender=child_data[child_data['name'==child_choice]]['gender'][child_idx]
-        age=child_data[child_data['name'==child_choice]]['age'][child_idx]
-        height=child_data[child_data['name'==child_choice]]['height'][child_idx]
-        weight=child_data[child_data['name'==child_choice]]['weight'][child_idx]
+        gender=child_data[child_data['name']==child_choice]['gender'][child_idx]
+        age=child_data[child_data['name']==child_choice]['age'][child_idx]
+        height=child_data[child_data['name']==child_choice]['height'][child_idx]
+        weight=child_data[child_data['name']==child_choice]['weight'][child_idx]
         st.write(f"성별: {gender} 아이 | 나이: {age} 세")
         st.write(f"키: {height} cm | 몸무게: {weight} kg")
         
