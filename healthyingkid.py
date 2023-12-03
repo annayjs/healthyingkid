@@ -4,7 +4,7 @@ import sqlite3
 import datetime
 ###################################################################################################
 # 0. page config & title
-st.set_page_config(layout="centered", page_title="미정_테스트", page_icon="🚀")
+st.set_page_config(layout="centered", page_title="AI융합캡스톤디자인과창업-프로토타입", page_icon="🚀")
 
 from streamlit_option_menu import option_menu
 selected3 = option_menu(None, ["menu1", "menu2",  "menu3"], 
