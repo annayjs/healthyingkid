@@ -346,5 +346,8 @@ elif selection == "menu3":
     #answer=translator.translate_text(response.choices[0].message.content, target_lang="KO").text
     for message in st.session_state.messages:
         if message["role"] == "assistant":
-            print('hello')
+            answer= message['content']
+            answer = translator.translate_text(answer, target_lang="KO").text
+            st.write("닥터 아이봇👩‍⚕️")
+            st.write(f"{answer}")
 
