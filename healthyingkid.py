@@ -347,27 +347,6 @@ elif selection == "menu3":
     st.subheader("📝 상담 로그")
     answer=translator.translate_text(response.choices[0].message.content, target_lang="KO").text
     for message in st.session_state.messages:
-    if message["role"] == "user":
-        role_1 = "🙋‍♂나: "
-        question = message['content']
-        pattern_1 = "Answer about (.*?) in"
-        match_1 = re.search(pattern_1, question)
-        if match_1:
-            result_1 = match_1.group(1)
-        pattern_2= 'like (.*?) counsel'
-        match_2= re.search(pattern_2, question)
-        if match_2:
-            result_2 = match_2.group(1)
-        result_2=translator.translate_text(result_2, target_lang="KO").text
-        if result_2=='Lao':
-            role_2="🧔노자:"
-        else:
-            role_2 = "🧔%s:"%result_2
-        st.write(f"{role_1}")
-        st.write(f"{result_1}")
-        st.write(f"{role_2}")
-    elif message['role'] == 'assistant':
-        answer= message['content']
-        answer = translator.translate_text(answer, target_lang="KO").text
-        st.write(f"{answer}")
+        if message["role"] == "user":
+            print('hello')
 
