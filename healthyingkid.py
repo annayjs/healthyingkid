@@ -371,7 +371,7 @@ elif selection == "menu3":
                 위의 모든 정보를 고려해서 맞춤 치료방법과 복용해야하는 약 등 아이의 건강 상태를 진단해줘."""%(gender, height, weight, age, d1, d2, d3, symptom)
         prompt_eng=translator.translate_text(prompt, target_lang="EN-US").text
         st.session_state.messages.append({"role": "user", 
-                                      "content": prompt_eng})
+                                      "content": prompt_eng +"@@@" + symptom})
         response = openai.chat.completions.create(
             model="gpt-4",
             messages=st.session_state.messages, 
@@ -380,15 +380,16 @@ elif selection == "menu3":
         answer = translator.translate_text(response.choices[0].message.content, target_lang='KO').text
         if 'messages' not in st.session_state:
             st.session_state.messages = []
-        st.session_state.messages.append({"role": "assistant", "content": answer + "@@@" + symptom})
+        st.session_state.messages.append({"role": "assistant", "content": answer})
         
     for message in st.session_state.messages:
-        if message["role"] == "assistant":
-            gpt_answer = message['content'].split('@@@')[0]
+        if message["role"] == "user":
             input_symptom = message['content'].split('@@@')[1]
             st.write("🙋‍♂나:")
-            st.write(symptom)
+            st.write(input_symptom)
             st.write("_________________________________________________________________________________________________________")
+        if message["role"] == "assistant":
+            gpt_answer = message['content']
             st.write("👩‍⚕️닥터 아이봇: ")
             st.write(f"{gpt_answer}")
             st.write("_________________________________________________________________________________________________________")
