@@ -255,24 +255,21 @@ elif selection == "menu2":
     with tab2:
         st.subheader("🔍육아일기 찾기")
         view_date = st.date_input("날짜를 선택하세요", key="view_date2")
-        search_button = st.button("찾기", key='submit2')
+        #아이정보 csv 가져오기
+        import requests
+        import pandas as pd
+        
+        url = 'https://raw.githubusercontent.com/annayjs/healthyingkid/main/child_info.csv'  # GitHub에 있는 CSV 파일의 URL
+        response = requests.get(url)
+        open('child_info.csv', 'wb').write(response.content)
 
-        if search_button:
-            #아이정보 csv 가져오기
-            import requests
-            import pandas as pd
-            
-            url = 'https://raw.githubusercontent.com/annayjs/healthyingkid/main/child_info.csv'  # GitHub에 있는 CSV 파일의 URL
-            response = requests.get(url)
-            open('child_info.csv', 'wb').write(response.content)
+        child_data = pd.read_csv('child_info.csv')
 
-            child_data = pd.read_csv('child_info.csv')
-
-            child_choice = st.radio("아이를 선택하세요:", (child_data['name'].to_list()))
-            
-            st.write(f"Day 1: {child_data[child_data['name']==child_choice].loc[:, 'Day 1']}")
-            st.write(f"Day 2: {child_data[child_data['name']==child_choice].loc[:, 'Day 2']}")
-            st.write(f"Day 3: {child_data[child_data['name']==child_choice].loc[:, 'Day 3']}")
+        child_choice = st.radio("아이를 선택하세요:", (child_data['name'].to_list()))
+        
+        st.write(f"Day 1: {child_data[child_data['name']==child_choice].loc[:, 'Day 1']}")
+        st.write(f"Day 2: {child_data[child_data['name']==child_choice].loc[:, 'Day 2']}")
+        st.write(f"Day 3: {child_data[child_data['name']==child_choice].loc[:, 'Day 3']}")
             
 
 ###################################################################################################################
