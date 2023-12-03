@@ -307,9 +307,6 @@ elif selection == "menu3":
         
 
     
-    conversation = [
-        {"role": "assistant", "content": f"아이의 증상을 알려주세요"},
-    ]
 
     if "messages" not in st.session_state:
         st.session_state.messages = [
@@ -320,6 +317,8 @@ elif selection == "menu3":
     with st.form("chat_form", clear_on_submit=True):
         symptom = st.text_input("상담 내용을 입력하세요:", key="user_input")
         submitted = st.form_submit_button("입력")
+    
+    st.subheader("📝 상담 로그")
     
     if submitted and symptom:
         st.write("🙋‍♂나:")
@@ -344,9 +343,8 @@ elif selection == "menu3":
             model="gpt-4",
             messages=st.session_state.messages
         )
-    st.subheader("📝 상담 로그")
     #answer=translator.translate_text(response.choices[0].message.content, target_lang="KO").text
     for message in st.session_state.messages:
-        if message["role"] == "user":
+        if message["role"] == "assistant":
             print('hello')
 
