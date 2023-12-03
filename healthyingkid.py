@@ -319,6 +319,8 @@ elif selection == "menu3":
         submitted = st.form_submit_button("입력")
     
     st.subheader("📝 상담 로그")
+    st.write("_________________________________________________________________________________________________________")
+    
     
     if submitted and symptom:
         prompt= """
