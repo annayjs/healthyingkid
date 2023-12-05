@@ -7,8 +7,8 @@ import datetime
 st.set_page_config(layout="centered", page_title="AI융합캡스톤디자인과창업-프로토타입", page_icon="🚀")
 
 from streamlit_option_menu import option_menu
-selected3 = option_menu(None, ["menu1", "menu2",  "menu3"], 
-    icons=['house', 'cloud-upload', "list-task"], 
+selected3 = option_menu(None, ["육아일기", "닥터 아이봇",  "소아병원 찾기"], 
+    icons=['person-bounding-box', 'menu-up', "arrow-down-left-circle-fill"], 
     menu_icon="cast", default_index=0, orientation="horizontal",key="test_key",
     styles={
         "container": {"padding": "0!important", "background-color": "#fafafa"},
@@ -149,7 +149,7 @@ def find_parking_info(medi_info):
 # 4. Menu Item Selection
 selection = st.session_state["test_key"]
 
-if selection == None or selection == "menu1":
+if selection == None or selection == "소아병원 찾기":
     # [기능1-가까운 소아병원 찾기]
     st.subheader("🏥 가까운 소아병원 찾기")
     distance = st.select_slider("Set distance",["🏃🏻‍♀️도보이동", "🚘대중교통 이용", "🚗자가용 이용"],label_visibility="collapsed")
@@ -200,7 +200,7 @@ if selection == None or selection == "menu1":
                 st.write(parking_info[2])
             st.form_submit_button("👩🏻‍⚕️병원 예약하러 가기", use_container_width=True)
 
-elif selection == "menu2":
+elif selection == "닥터 아이봇":
     import openai
     import deepl
     import streamlit
@@ -303,7 +303,7 @@ elif selection == "menu2":
     #초기화
     st.session_state.messages = []
 ###################################################################################################################
-elif selection == "menu3":
+elif selection == "닥터 아이봇":
     import streamlit
     import openai
     import deepl
