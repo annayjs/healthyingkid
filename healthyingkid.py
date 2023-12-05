@@ -28,8 +28,8 @@ load_dotenv(verbose=True)
 map_url = f'https://www.googleapis.com/geolocation/v1/geolocate?key={geo_key}'
 map_data = {'considerIp': True,}
 map_res = json.loads(requests.post(map_url, map_data).text)
-#lat_here, lng_here = map_res["location"]["lat"], map_res["location"]["lng"]
-lat_here, lng_here = 37.5509442, 126.9410023
+lat_here, lng_here = map_res["location"]["lat"], map_res["location"]["lng"]
+#lat_here, lng_here = 37.5509442, 126.9410023
 ###################################################################################################
 # 2. 한국지도 배경
 import math
@@ -207,6 +207,8 @@ elif selection == None or selection == "menu1":
     #초기화
     st.session_state.messages = []
     #번역기 생성
+    os.environ["OPEN_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+    openai.api_key = os.environ["OPEN_API_KEY"]
     DeepL_API_KEY = 'c24af978-e422-0d8b-4420-4c2daa1a067e:fx'
     translator = deepl.Translator(DeepL_API_KEY)
     st.title("우리아이 육아일기 🧒📔")
