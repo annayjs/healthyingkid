@@ -8,7 +8,7 @@ st.set_page_config(layout="centered", page_title="AI융합캡스톤디자인과�
 
 from streamlit_option_menu import option_menu
 selected3 = option_menu(None, ["menu1", "menu2",  "menu3"], 
-    icons=['menu-up', 'cloud-upload', "list-task"], 
+    icons=['house', 'cloud-upload', "list-task"], 
     menu_icon="cast", default_index=0, orientation="horizontal",key="test_key",
     styles={
         "container": {"padding": "0!important", "background-color": "#fafafa"},
@@ -28,8 +28,8 @@ load_dotenv(verbose=True)
 map_url = f'https://www.googleapis.com/geolocation/v1/geolocate?key={geo_key}'
 map_data = {'considerIp': True,}
 map_res = json.loads(requests.post(map_url, map_data).text)
-lat_here, lng_here = map_res["location"]["lat"], map_res["location"]["lng"]
-#lat_here, lng_here = 37.5509442, 126.9410023
+#lat_here, lng_here = map_res["location"]["lat"], map_res["location"]["lng"]
+lat_here, lng_here = 37.5509442, 126.9410023
 ###################################################################################################
 # 2. 한국지도 배경
 import math
@@ -149,7 +149,7 @@ def find_parking_info(medi_info):
 # 4. Menu Item Selection
 selection = st.session_state["test_key"]
 
-if selection == "menu3":
+if selection == None or selection == "menu1":
     # [기능1-가까운 소아병원 찾기]
     st.subheader("🏥 가까운 소아병원 찾기")
     distance = st.select_slider("Set distance",["🏃🏻‍♀️도보이동", "🚘대중교통 이용", "🚗자가용 이용"],label_visibility="collapsed")
@@ -200,16 +200,16 @@ if selection == "menu3":
                 st.write(parking_info[2])
             st.form_submit_button("👩🏻‍⚕️병원 예약하러 가기", use_container_width=True)
 
-elif selection == None or selection == "menu1":
+elif selection == "menu2":
     import openai
     import deepl
     import streamlit
     #초기화
     st.session_state.messages = []
     #번역기 생성
+    DeepL_API_KEY = 'c24af978-e422-0d8b-4420-4c2daa1a067e:fx'
     os.environ["OPEN_API_KEY"] = st.secrets["OPENAI_API_KEY"]
     openai.api_key = os.environ["OPEN_API_KEY"]
-    DeepL_API_KEY = 'c24af978-e422-0d8b-4420-4c2daa1a067e:fx'
     translator = deepl.Translator(DeepL_API_KEY)
     st.title("우리아이 육아일기 🧒📔")
     tab1, tab2 = st.tabs(["육아일기 쓰기", "육아일기 찾기"])
@@ -303,7 +303,7 @@ elif selection == None or selection == "menu1":
     #초기화
     st.session_state.messages = []
 ###################################################################################################################
-elif selection == "menu2":
+elif selection == "menu3":
     import streamlit
     import openai
     import deepl
@@ -395,5 +395,3 @@ elif selection == "menu2":
             st.write("👩‍⚕️닥터 아이봇: ")
             st.write(f"{gpt_answer}")
             st.write("_________________________________________________________________________________________________________")
-            
-
