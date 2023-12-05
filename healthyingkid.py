@@ -149,7 +149,7 @@ def find_parking_info(medi_info):
 # 4. Menu Item Selection
 selection = st.session_state["test_key"]
 
-if selection == None or selection == "menu1":
+if selection == None or selection == "menu3":
     # [기능1-가까운 소아병원 찾기]
     st.subheader("🏥 가까운 소아병원 찾기")
     distance = st.select_slider("Set distance",["🏃🏻‍♀️도보이동", "🚘대중교통 이용", "🚗자가용 이용"],label_visibility="collapsed")
@@ -200,7 +200,7 @@ if selection == None or selection == "menu1":
                 st.write(parking_info[2])
             st.form_submit_button("👩🏻‍⚕️병원 예약하러 가기", use_container_width=True)
 
-elif selection == "menu2":
+elif selection == "menu1":
     import openai
     import deepl
     import streamlit
