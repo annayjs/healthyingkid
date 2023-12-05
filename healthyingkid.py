@@ -208,14 +208,15 @@ elif selection == "menu2":
     st.session_state.messages = []
     #번역기 생성
     DeepL_API_KEY = 'c24af978-e422-0d8b-4420-4c2daa1a067e:fx'
-    os.environ["OPEN_API_KEY"] = st.secrets["OPENAI_API_KEY"]
-    openai.api_key = os.environ["OPEN_API_KEY"]
     translator = deepl.Translator(DeepL_API_KEY)
     st.title("우리아이 육아일기 🧒📔")
     tab1, tab2 = st.tabs(["육아일기 쓰기", "육아일기 찾기"])
 
     # 육아일기 쓰기 탭
     with tab1:
+        
+        api_key_1=st.text_input("api key를 입력하세요:", key="api_key_1")
+        openai.api_key=api_key_1
         st.subheader("✍🏻육아일기 쓰기")
         
         #아이정보 csv 가져오기
@@ -310,8 +311,8 @@ elif selection == "menu3":
     import csv
 
     st.title("닥터 아이봇 상담👩‍⚕️")
-    #api_key=st.text_input("api key를 입력하세요:", key="api_key")
-    #openai.api_key=api_key
+    api_key=st.text_input("api key를 입력하세요:", key="api_key")
+    openai.api_key=api_key
     #번역기 생성
     DeepL_API_KEY = 'c24af978-e422-0d8b-4420-4c2daa1a067e:fx'
     translator = deepl.Translator(DeepL_API_KEY)
@@ -395,3 +396,4 @@ elif selection == "menu3":
             st.write("👩‍⚕️닥터 아이봇: ")
             st.write(f"{gpt_answer}")
             st.write("_________________________________________________________________________________________________________")
+            
