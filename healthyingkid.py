@@ -208,7 +208,7 @@ elif selection == None or selection == "menu1":
     st.session_state.messages = []
     #번역기 생성
     DeepL_API_KEY = 'c24af978-e422-0d8b-4420-4c2daa1a067e:fx'
-    os.environ["OPEN_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+    #os.environ["OPEN_API_KEY"] = st.secrets["OPENAI_API_KEY"]
     openai.api_key = os.environ["OPEN_API_KEY"]
     translator = deepl.Translator(DeepL_API_KEY)
     st.title("우리아이 육아일기 🧒📔")
