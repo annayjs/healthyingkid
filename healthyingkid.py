@@ -303,7 +303,7 @@ elif selection == "menu1":
     #초기화
     st.session_state.messages = []
 ###################################################################################################################
-elif selection == "menu3":
+elif selection == "menu2":
     import streamlit
     import openai
     import deepl
