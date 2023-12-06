@@ -28,8 +28,8 @@ load_dotenv(verbose=True)
 map_url = f'https://www.googleapis.com/geolocation/v1/geolocate?key={geo_key}'
 map_data = {'considerIp': True,}
 map_res = json.loads(requests.post(map_url, map_data).text)
-lat_here, lng_here = map_res["location"]["lat"], map_res["location"]["lng"]
-#lat_here, lng_here = 37.5509442, 126.9410023
+#lat_here, lng_here = map_res["location"]["lat"], map_res["location"]["lng"]
+lat_here, lng_here = 37.5509442, 126.9410023
 ###################################################################################################
 # 2. 한국지도 배경
 import math
